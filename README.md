@@ -22,4 +22,10 @@ The skill supplements the bundled `computer-use` plugin when that plugin is avai
 
 ## Shared browser operation
 
-For workflows spanning local Windows Codex and ChatGPT Work, see the [shared browser operation guide](docs/browser-operation-workflow.md). The companion [browser-operation skill](skills/browser-operation) defines the shared entry point and environment adapters. ChatGPT Work's cloud browser runs remotely and cannot use local Chrome state.
+For workflows spanning local Windows Codex and ChatGPT Work, see the [shared browser operation guide](docs/browser-operation-workflow.md).
+
+The companion [browser-operation skill](skills/browser-operation) defines the shared entry point and environment adapters. In Codex, install it from:
+
+`https://github.com/nao40031/codex-windows-desktop-computer-use/tree/main/skills/browser-operation`
+
+In ChatGPT Work, use the skill where that Work surface supports installed skills; otherwise apply the guide's environment adapter in the task instructions. Installation does not connect Work's cloud browser to local Chrome.
