@@ -15,4 +15,4 @@ Read [the workflow reference](references/workflow.md) before selecting a browser
 
 For local Windows Codex native-app work, also use the `windows-desktop-computer-use` skill and follow the bundled Computer Use guidance. Do not use native Windows UI automation for terminal commands, authentication dialogs, or security prompts.
 
-Work's remote cloud browser is a separate computer. It cannot use local Chrome cookies, extensions, tabs, or desktop apps. Do not bypass website, product, or workspace restrictions.
+Work's cloud browser has separate state from local Chrome. A mobile prompt can use the host's Chrome only through a supported connected-computer route that exposes that browser to the current task. Do not bypass website, product, or workspace restrictions.

@@ -9,7 +9,7 @@ Use the first available option that can complete the requested task:
 1. **Connected app or site tool** — Prefer a purpose-built connector when it supports the requested read or change.
 2. **Local Chrome profile** — In a supported desktop Codex or ChatGPT desktop session, use the Codex Chrome extension when it is actually listed and the task needs local Chrome tabs, cookies, extensions, or a signed-in session. An explicit `@Chrome` mention is not needed when the user's task and available surface make this choice clear. Verify the active account and target tab before proceeding.
 3. **Desktop built-in browser** — In ChatGPT desktop Work or Codex, use the in-app browser for public pages, local development, or work that should stay in the app. It has its own browser state. Workspace policy and site support still apply.
-4. **Work cloud browser** — In ChatGPT Work on web or mobile, use the cloud browser that Work provides when available. It runs remotely with its own cookies and sign-ins. It cannot see or be made to use the user's local Chrome profile, extensions, open tabs, or local desktop apps.
+4. **Work cloud browser** — In ChatGPT Work on web or mobile, use the cloud browser that Work provides when available. It runs remotely with its own cookies and sign-ins. The cloud browser itself does not share the user's local Chrome state. A task with supported local computer access is a distinct route; see below.
 5. **Windows desktop app** — In local Windows Codex, use the installed `windows-desktop-computer-use` skill and bundled Computer Use API after checking they are available in this session. In local desktop Work, use desktop/app controls only when the product exposes them and the workspace allows them.
 6. **User handoff or supported API** — If the required site or action is unavailable on the selected surface, stop at that boundary. Offer a supported connector/API, the desktop surface if the user can use it, or a clear handoff for the user to complete.
 
@@ -34,7 +34,7 @@ When a previously available Chrome tab or browser tool stops responding during a
 2. Check the current task's execution environment and discover its browser controls again. If the documented integration supports reinitializing or rebinding, do so once, then list browsers and tabs afresh. Use only a tab returned by the current session and verify its URL and account before continuing.
 3. If the surface reconnects, resume the original task from the last verified state without asking the user to repeat the same instruction. Finish and verify the requested result.
 4. If Chrome is absent from a local task, use a connected app/API or an independently signed-in in-app browser when it can complete the same authorized task without evading a site or workspace block. Explain any account or session change that matters to the work.
-5. If this is a cloud or mobile task, or the execution environment remains unavailable, report that this task cannot reach the local Chrome extension. Continue independent work that does not need the missing surface and give a concrete local-desktop handoff for the remaining action. Do not keep retrying an unavailable connection or claim to have enabled it.
+5. If the task still cannot reach local Chrome, continue independent work and report the exact missing capability. For a mobile request, check whether the user can continue a connected-host Codex task through Remote or start an eligible Work Cloud task with local computer access. Do not keep retrying an unavailable connection or claim to have enabled it.
 
 An installed extension or a connection observed in another chat does not grant this task access. The model can re-discover and use an exposed connection; it cannot turn on a missing product capability or grant access that requires the user's action.
 
@@ -57,10 +57,12 @@ An installed extension or a connection observed in another chat does not grant t
 
 ### ChatGPT Work on web or mobile
 
-1. Use the Work cloud browser if the current task exposes it and the site is supported.
-2. Sign into the remote browser through its secure sign-in flow when prompted. Its session is separate from local Chrome.
-3. If a site says it is unavailable or blocks automation, stop and report the block. Do not try to route the remote browser through local Chrome, Cloud Shell, a tunnel, or another machine.
-4. Offer a supported app connector/API or ask the user to continue in a local desktop session where an official local-browser integration is available.
+1. Determine whether the task has local computer access. An existing cloud-only task does not gain local tools from a model change or from enabling the feature later.
+2. With local access actually exposed, discover the host browser controls and verify the target tab, URL, and account before acting. If the host is unavailable, the task may continue in a cloud container without its local tools.
+3. Otherwise use the Work cloud browser if exposed and supported. Its sign-in and cookies are separate from local Chrome. Respect site blocks; do not route the cloud browser through local Chrome, Cloud Shell, or a tunnel to evade them.
+4. When the task requires the host's Chrome, use a supported connected-computer route: continue a host Codex task from mobile Codex/Remote, or, if the workspace grants it, start a new eligible Work Cloud task from the desktop with local computer access and continue it on mobile. Verify that the Chrome extension is actually exposed in that task. If neither route is available, state the exact setup or connection step that remains.
+
+Remote uses the connected host's browser setup and tools. The host must be awake, online, running ChatGPT desktop, and signed in to the same account and workspace. Work Cloud local computer access depends on workspace rollout and permission; eligible new tasks are started with Cloud selected in the desktop app. Do not claim that Work Cloud local access necessarily exposes Chrome until the current task's tool inventory confirms it. See [Remote connections](https://learn.chatgpt.com/docs/remote-connections) and [Local computer access for Work Cloud](https://learn.chatgpt.com/docs/enterprise/cloud-local-access).
 
 ## Capability report
 
