@@ -19,6 +19,7 @@ The Sky calls above were confirmed in a Windows Codex session on 2026-10-15. The
 ## Act on observed state
 
 - Read the project's `AGENTS.md` and any app-specific runbook before acting. Confirm the selected window from a fresh observation, then perform one state-derived action and observe again. A successful API response is not proof that the screen changed.
+- Before capturing a screenshot for documentation, reporting, or visual verification, maximize the target application window and confirm the relevant content is visible. If the dialog under inspection cannot be maximized, enlarge it enough to make its controls and values readable. Restore the previous size after capture when continuing normal use.
 - For native file pickers, click the filename field directly, enter the existing file's absolute path with the supported input method, and visually verify the entire value. If the field is horizontally scrolled, expose the start and end before proceeding.
 - If typing is not visible, recheck the foreground window and focus, click the field again, and retry after a fresh observation. Use a dialog shortcut such as `Alt+N` or paste only when supported and verify the visible result. Cancel an input-only check without opening the file.
 - Follow the bundled Computer Use confirmation guidance for Windows UI actions. Obtain any authorization required by the task before submitting, importing, deleting, or sharing data.
