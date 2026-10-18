@@ -29,3 +29,9 @@ The companion [browser-operation skill](skills/browser-operation) defines the sh
 `https://github.com/nao40031/codex-windows-desktop-computer-use/tree/main/skills/browser-operation`
 
 In ChatGPT Work, use the skill where that Work surface supports installed skills; otherwise apply the guide's environment adapter in the task instructions. Installation does not connect Work's cloud browser to local Chrome.
+
+When a connected Chrome tab drops during a task, the skill checks the current session again and resumes from the last verified state if the connection returns. If it does not, the skill reuses a browser-capable successor task, creates one where supported, or provides a ready-to-send creation prompt. It cannot enable a Chrome extension in an unavailable execution environment. For local Codex projects, a short `AGENTS.md` instruction can make this preference explicit:
+
+```md
+- For tasks needing a browser, use the `browser-operation` skill to discover and choose an available surface proactively. Recheck a dropped Chrome connection once through documented tools. If it remains unavailable, reuse or create a browser-capable task where supported; otherwise provide a ready-to-send creation prompt with the verified state and pending work.
+```
