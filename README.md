@@ -34,4 +34,5 @@ When a connected Chrome tab drops during a task, the skill checks the current se
 
 ```md
 - For website UI tasks, use `browser-operation` proactively. Before reporting missing browser tools, inspect callable and supported deferred tools and invoke the documented browser/tab inventory; report what was checked. Follow documented recovery once, preserving valid browser bindings when required. If only the original tab fails, try its confirmed URL once in a new tab in the same Chrome profile. If capability is still missing, reuse or create a browser-capable task when authorized and supported; otherwise provide the full ready-to-send handoff prompt. Respect site and workspace restrictions.
+- Support capability and completion claims with actual results in the relevant task. Treat screenshots and prior assistant statements as reports until verified, label hypotheses and unverified checks, and reconcile conclusions with earlier success or user corrections.
 ```

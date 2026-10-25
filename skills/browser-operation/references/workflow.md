@@ -89,12 +89,30 @@ Creating a successor does not resolve a site denial, missing authorization, or w
 
 Remote uses the connected host's browser setup and tools. The host must be awake, online, running ChatGPT desktop, and signed in to the same account and workspace. Work Cloud local computer access depends on workspace rollout and permission; eligible new tasks are started with Cloud selected in the desktop app. Do not claim that Work Cloud local access necessarily exposes Chrome until the current task's tool inventory confirms it. See [Remote connections](https://learn.chatgpt.com/docs/remote-connections) and [Local computer access for Work Cloud](https://learn.chatgpt.com/docs/enterprise/cloud-local-access).
 
+## Check the evidence before reporting
+
+- Use "checked," "connected," "verified," or "completed" only for an actual call or observation supporting that exact claim. If discovery could not run, say "not verified" and explain why. A plan to check is not a result.
+- Keep the evidence's scope: current task, previous turn, another task, or user-provided report. A screenshot of an assistant saying "no browser tool" proves that the assistant reported it; it does not verify that task's tool inventory. Previous assistant messages are leads to investigate, not independent confirmation of their own claims.
+- Separate the observed failure from its cause. A tab attach error supports "this tab connection failed"; it does not prove missing tools, disabled settings, or permanent task incompatibility. Mark a possible cause as a hypothesis unless current evidence or an applicable official specification establishes it. General troubleshooting guidance alone does not diagnose this case.
+- Compare a proposed conclusion with contrary evidence already in the conversation, especially a successful operation in the same task or a user correction. Re-check the underlying source where available, correct the unsupported conclusion plainly, and preserve earlier completed checks instead of asking the user to repeat them without a new reason.
+- Before recommending a setting change or declaring success, match the recommendation or success claim to the observed state. Report an unresolved check rather than filling the gap with a confident explanation. These checks reduce unsupported statements; they do not guarantee every model response will be correct.
+
+Examples of reports supported by the available evidence:
+
+| Evidence | Supported report |
+| --- | --- |
+| Only a screenshot saying the tool is unavailable | The other assistant reported it; actual tool availability there is unverified. |
+| Current inventory returns Chrome and tabs | Chrome inventory is reachable in this task; target-page control still needs verification. |
+| Tool discovery finds no supported callable entry point | No supported browser entry point was found in this task after discovery; no conclusion about another task or permanent availability. |
+| Chrome inventory works but binding one tab fails | That tab connection failed; try the bounded recovery/new-tab path. |
+
 ## Capability report
 
 For troubleshooting, report:
 
 - Product and task location: local desktop, web/mobile cloud, or unknown.
 - Discovery evidence: which tool entry points were checked and which documented inventory call was made, or why none could be called. Keep an unknown execution location explicit.
+- Evidence status and scope: distinguish directly observed facts from user/other-task reports, hypotheses, and unverified points.
 - Detected surface: connector, built-in browser, Chrome extension, cloud browser, Windows Computer Use, or unavailable.
 - Verification: which non-sensitive page/window was observed and whether the intended state appeared.
 - Boundary: the exact site, session, policy, or capability failure.
