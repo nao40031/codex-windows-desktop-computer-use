@@ -15,6 +15,17 @@ Use the first available option that can complete the requested task:
 
 Do not treat a browser from another task, product, or machine as the current session. Do not assume that a browser extension being installed means its session is connected.
 
+## Check capability before reporting an unavailable browser
+
+Apply this check on the first browser attempt and when the user says the browser has been opened or reconnected:
+
+1. Inspect the tools exposed to the current task, including documented tool discovery for deferred tools when available. Prefer an already exposed browser or Computer Use entry point over a broad plugin search. An API not appearing in the initial tool list is not evidence that it is unavailable.
+2. Read the selected integration's current instructions, initialize only as documented, and call its browser/tab inventory. For example, an exposed `cua_repl` supports `cua.getState()`; use that integration's current documentation rather than assuming an older API. An empty inventory is different from a missing tool, and a failed call is different from never attempting discovery.
+3. If the tool exists, use the inventory to distinguish an absent Chrome connection, an unavailable host, and a tab-specific failure. Follow the bounded recovery steps below. Keep a valid browser binding when its documentation requires that; refresh or replace the tab instead of resetting the browser for every tab error.
+4. If no supported callable entry point is found, state that limitation with the discovery evidence and follow the task handoff procedure. Do not claim to have checked a browser connection without an inventory call. A visible browser window or the absence of `@Chrome` alone does not establish tool availability.
+
+Do not end with a generic request to "enable the browser in Work." If a user action is necessary, name the exact documented setting or supported host route and the evidence that makes it relevant. When task creation is unavailable, provide the ready-to-send handoff prompt in the same response. Official troubleshooting covers the browser toggle, active profile, task-specific connection state, and `/feedback`; it does not identify an absent tool's root cause from a screenshot. See [Browser extension troubleshooting](https://learn.chatgpt.com/docs/chrome-extension) and [synced task troubleshooting](https://learn.chatgpt.com/docs/reference/troubleshooting).
+
 ## Shared operating rules
 
 - Discover the actual tools and browser/app inventory for the current session before acting. Select a surface based on returned evidence.
@@ -31,7 +42,7 @@ Do not treat a browser from another task, product, or machine as the current ses
 When a previously available Chrome tab or browser tool stops responding during an authorized task:
 
 1. Preserve the pending action and the last verified state. Do not assume that an uncertain write succeeded, and do not repeat it until the destination's current state is checked.
-2. Check the current task's execution environment and discover its browser controls again. If the documented integration supports reinitializing or rebinding, do so once, then list browsers and tabs afresh. Use only tabs returned by the current session. Record whether the tool itself is missing, the host is unavailable, the tab is missing, or the site denies access; these are different failures.
+2. Check the current task's execution environment and discover its browser controls again using the capability check above. Follow the integration's documented recovery once, preserving valid browser bindings when required, then list browsers and tabs afresh. Use only tabs returned by the current session. Record whether the tool itself is missing, the host is unavailable, the tab is missing, or the site denies access; these are different failures.
 3. If Chrome is connected but attaching to or operating a particular tab still fails, leave that tab open and try once in a new tab in the **same Chrome profile**. Navigate only to the URL read from the failed tab or supplied by the user; do not guess the destination. Confirm the new tab's URL, page, and account before resuming. A new tab is a connection recovery step, not a way around a site or workspace denial.
 4. If the surface reconnects, resume the original task from the last verified state without asking the user to repeat the same instruction. Finish and verify the requested result.
 5. If Chrome itself is absent from a local task, or the new-tab attempt also fails, use a connected app/API or an independently signed-in in-app browser only when it can complete the same authorized task without evading a site or workspace block. Explain any account or session change that matters to the work, then use the handoff procedure below for pending browser work. Do not keep retrying an unavailable connection or claim to have enabled it.
@@ -46,6 +57,8 @@ If Chrome worked earlier in the **same** task, treat that success as evidence th
 2. Otherwise, if the current product exposes task creation, create a new Codex or Work task on a route that can reach the required browser. A local Chrome task needs the connected host and a browser-capable local or supported remote execution route; a plain Work cloud browser is a separate session. Choose the destination from actual tool and host availability, not from the task label alone.
 3. Give the successor a concise handoff: objective, source task or project, verified state, pending action, target tab and URL, constraints, uncertain writes, and where to read full context. Do not put secrets, tokens, or private browser content in the prompt. Verify the successor's browser inventory, tab URL, and account before continuing.
 4. If task creation is unavailable, show the user a ready-to-send creation prompt with those same details and state which Codex or Work location should receive it. Do not merely ask the user to create a blank chat. Continue any independent work in the current task.
+
+Try at most one new successor for the same capability failure. If that successor also lacks the required browser, report the remaining host/product limitation and preserve its handoff; do not create a chain of empty tasks. Work tasks that cannot load this local skill can use the repository's [portable task instructions](https://github.com/nao40031/codex-windows-desktop-computer-use/blob/main/docs/browser-operation-workflow.md#portable-instructions-for-work).
 
 Creating a successor does not resolve a site denial, missing authorization, or workspace restriction. Stop at those boundaries. Do not send a prompt into an existing task unless the user has authorized messaging that task.
 
@@ -81,6 +94,7 @@ Remote uses the connected host's browser setup and tools. The host must be awake
 For troubleshooting, report:
 
 - Product and task location: local desktop, web/mobile cloud, or unknown.
+- Discovery evidence: which tool entry points were checked and which documented inventory call was made, or why none could be called. Keep an unknown execution location explicit.
 - Detected surface: connector, built-in browser, Chrome extension, cloud browser, Windows Computer Use, or unavailable.
 - Verification: which non-sensitive page/window was observed and whether the intended state appeared.
 - Boundary: the exact site, session, policy, or capability failure.
