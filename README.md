@@ -28,10 +28,11 @@ The companion [browser-operation skill](skills/browser-operation) defines the sh
 
 `https://github.com/nao40031/codex-windows-desktop-computer-use/tree/main/skills/browser-operation`
 
-In ChatGPT Work, use the skill where that Work surface supports installed skills; otherwise apply the guide's environment adapter in the task instructions. Installation does not connect Work's cloud browser to local Chrome.
+In ChatGPT Work, use the skill where that Work surface supports installed skills; otherwise paste the guide's [portable task instructions](docs/browser-operation-workflow.md#portable-instructions-for-work). Installation does not connect Work's cloud browser to local Chrome.
 
 When a connected Chrome tab drops during a task, the skill checks the current session again, then tries the same Chrome profile in a new tab if only the original tab fails. It resumes from the last verified state if the connection returns. Otherwise, the skill reuses a browser-capable successor task, creates one where supported, or provides a ready-to-send creation prompt. It cannot enable a Chrome extension in an unavailable execution environment. For local Codex projects, a short `AGENTS.md` instruction can make this preference explicit:
 
 ```md
-- For tasks needing a browser, use the `browser-operation` skill to discover and choose an available surface proactively. Recheck a dropped Chrome connection once through documented tools. If the Chrome connection works but the original tab does not, try the verified target URL in a new tab in the same profile. If Chrome remains unavailable, reuse or create a browser-capable task where supported; otherwise provide a ready-to-send creation prompt with the verified state and pending work.
+- For website UI tasks, use `browser-operation` proactively. Before reporting missing browser tools, inspect callable and supported deferred tools and invoke the documented browser/tab inventory; report what was checked. Follow documented recovery once, preserving valid browser bindings when required. If only the original tab fails, try its confirmed URL once in a new tab in the same Chrome profile. If capability is still missing, reuse or create a browser-capable task when authorized and supported; otherwise provide the full ready-to-send handoff prompt. Respect site and workspace restrictions.
+- Support capability and completion claims with actual results in the relevant task. Treat screenshots and prior assistant statements as reports until verified, label hypotheses and unverified checks, and reconcile conclusions with earlier success or user corrections.
 ```
